@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jie.usertask.mapper.UserMapper">
+    <resultMap id="result" type="com.jie.usertask.entities.User">
+        <result property="StudentId" column="StudentId"/>
+        <result property="password" column="password"/>
+
+    </resultMap>
+
+    <select id="ListUser" resultMap="result">
+        SELECT * FROM user
+    </select>
+
+    <select id="findUserByStudentId" resultMap="result">
+        SELECT * FROM user where StudentId=#{StudentId}
+    </select>
+
+    <select id="findUserById" resultMap="result">
+        SELECT * FROM user where id=#{id}
+    </select>
+
+    <select id="login" resultType="com.jie.usertask.entities.User">
+      select * from user where StudentId=#{StudentId} and password=#{password}
+   </select>
+
+
+    <insert id="insertUser" parameterType="com.jie.usertask.entities.User"
+            keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user
+        (
+        id,StudentId,password
+        )
+        VALUES (
+        #{id},
+        #{StudentId, jdbcType=VARCHAR},
+        #{password, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+
+    <update id="Update" parameterType="com.jie.usertask.entities.User">
+        update user set user.StudentId=#{StudentId},user.password=#{password} where user.id=#{id}
+    </update>
+</mapper>
