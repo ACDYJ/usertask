@@ -1,0 +1,14 @@
+com\jie\usertask\controller\HelloController.class
+com\jie\usertask\controller\TaskController.class
+com\jie\usertask\config\MyMvcConfig.class
+com\jie\usertask\entities\Task.class
+com\jie\usertask\mapper\TaskMapper.class
+com\jie\usertask\dao\TaskDao.class
+com\jie\usertask\entities\User.class
+com\jie\usertask\component\MyLocaleResolver.class
+com\jie\usertask\controller\CrudController.class
+com\jie\usertask\config\MyMvcConfig$1.class
+com\jie\usertask\dao\UserDao.class
+com\jie\usertask\mapper\UserMapper.class
+com\jie\usertask\controller\LoginController.class
+com\jie\usertask\UsertaskApplication.class
