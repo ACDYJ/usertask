@@ -1,7 +1,9 @@
 package com.jie.usertask.controller;
 
-import com.jie.usertask.dao.TaskDao;
+import com.jie.usertask.service.TaskDao;
+import com.jie.usertask.service.TaskDescDao;
 import com.jie.usertask.entities.Task;
+import com.jie.usertask.entities.TaskDesc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +16,16 @@ import java.util.Collection;
 @Controller
 public class TaskController {
     @Autowired
+    TaskDescDao taskDescDao;
+    @Autowired
     TaskDao taskDao;
     @GetMapping("/tasks")
     public String list(Model model, HttpSession session)
     {
-        Collection<Task> tasks=taskDao.getAll();
+        Collection<TaskDesc> tasks=taskDescDao.getAll();
         model.addAttribute("tasks",tasks);
         return "emp/list";
     }
-
 
     @GetMapping("/task")
     public String toAddPage(Model model){

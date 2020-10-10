@@ -15,5 +15,4 @@ public interface TaskMapper {
  public void delete(Integer taskId);
  public Collection<Task> getById(Integer id);
 
-
 }

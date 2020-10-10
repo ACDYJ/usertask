@@ -1,11 +1,10 @@
 package com.jie.usertask.controller;
 
-import com.jie.usertask.dao.TaskDao;
-import com.jie.usertask.dao.UserDao;
+import com.jie.usertask.service.TaskDao;
+import com.jie.usertask.service.UserDao;
 import com.jie.usertask.entities.Task;
 import com.jie.usertask.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;

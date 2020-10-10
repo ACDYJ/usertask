@@ -20,6 +20,4 @@ public interface UserMapper {
     public int delete(int id);
 
     public int Update(User user);
-
-
 }

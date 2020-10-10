@@ -1,340 +1,403 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<style type="text/css">
-			html,
-			body {
-				margin: 0;
-				height: 100%;
-			}
-			
-			canvas {
-				display: block;
-			}
-			
-			.content {
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #lightSource {
+            height: 280px;
+            width: 200px;
+            position: relative;
+            left: 50px;
+        }
+
+        .btn1
+        {
+            position: absolute;
+            top: 10px;
+            right: 200px;
+        }
+        #cubeSize {
+            height: 200px;
+            width: 200px;
+            position: relative;
+            left: 50px;
+        }
+
+        .panel-body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .panel-heading {
+            text-align: center;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .content {
             display: flex;
             flex-wrap: wrap;
             align-content: center;
-            width: 1138px;
-            height: 600px;
+            width: 1200px;
+            height: 500px;
             position: absolute;
-            top: 50px;
-            right: 100px;
-           
-          }
-          #side-bar{
-          	
-          	float: left;
-          	
-          }
-			
-			
-		</style>
-
-		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	</head>
-
-	<body onload="draw();">
-		
-		
-		<nav class="navbar navbar-default" role="navigation">
-	<div class="container-find">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="#">材料选择</a>
-		
-	</div>
-	<div>
-		<ul class="nav navbar-nav">
-			
-			
-				<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					
-					<b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li>SiO2</a></li>
-					<li>Cu</a></li>
-				</ul>
-			</li>
-			
-			<li class="active"><a href="#">精度修改</a></li>
-			<li><a href="#">Simulation</a></li>
-			
-			
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Structrues
-					<b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li>cube</a></li>
-					<li>cylinder</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					N-分器
-					<b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li>1:1</li>
-					<li>1:2</li>
-					<li>1:3</li>
-					
-				</ul>
-			</li>
-
-			
-			
-		</ul>
-
-		<form action="/tasks" method="Get">
-			<button type="submit" class="btn btn-primary">创建</button>
-		</form>
-
-	</div>
-	<button onclick="initModel()">创建新的模块</button>
-	
-	</div>
-</nav>
-
- <div id="side-bar">
- 	
- 	<ul>
- 		
- 		<li>适配</li>
- 		<li>a</li>
- 		<li>b</li>
- 		<li>c</li>
- 		<li>d</li>
- 		
- 		
- 	</ul>
- 	
- </div>
-
-		<div class="content" >
-			
-			<div id="div1">
-
-			</div>
-			<div id="div2">
-
-			</div>
-			<div id="div3">
-
-			</div>
-			<div id="div4">
+            top: 70px;
+            left: 290px;
+        }
+        /*	#side-bar {
+                float: left;
+            }*/
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body onload="draw();">
+
+<form class="form-inline" role="form" action="/task" method="post">
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">操作界面</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <!--<li class="active"><a href="#">iOS</a></li>
+    <li><a href="#">SVN</a></li>-->
+                    <li class="dropdown">
+
+                        <div class="form-group">
+                            <label for="name">材料</label>
+                            <select class="form-control" name="material">
+                                <option>SiO2</option>
+                                <option>CU</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">输入光源波长(nm)</label>
+                            <select class="form-control" name="wavelength">
+                                <option>1550</option>
+                                <option>1000</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Structrues</label>
+                            <select class="form-control" name="structrues">
+                                <option>Cube</option>
+                                <option>Cylinder</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">精度设置</label>
+                            <input type="text" class="form-control" id="name" placeholder="单位(nm)" name="accuracy">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">N分器</label>
+                            <select class="form-control" name="splitter">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+
+
+
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="panel panel-primary" id="lightSource">
+
+        <div class="panel-heading">
+            光源方向
+        </div>
+        <div class="panel-body">
+            <div class=" form-group">
+                <input name="xup" type="text" class="form-control" placeholder="x+" style="width: 160px;">
+            </div>
+            <div class="  form-group">
+                <input name="xdown" type="text" class="form-control" placeholder="x-" style="width: 160px;">
+            </div>
+            <div class="  form-group">
+                <input name="yup" type="text" class="form-control" placeholder="y+" style="width: 160px;">
+            </div>
+            <div class=" form-group">
+                <input name="ydown" type="text" class="form-control" placeholder="y-" style="width: 160px;">
+            </div>
+            <div class="form-group">
+                <input name="zup" type="text" class="form-control" placeholder="z+" style="width: 160px;">
+            </div>
+            <div class=" form-group">
+                <input name="zdown" type="text" class="form-control" placeholder="z-" style="width: 160px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" id="cubeSize">
+
+        <div class="panel-heading">
+            器件大小
+        </div>
+
+        <div class="panel-body">
+            <div class=" form-group">
+                <input name="length" type="text" class="form-control" placeholder="length" style="width: 160px;">
+            </div>
+            <div class="form-group">
+                <input name="width" type="text" class="form-control" placeholder="width" style="width: 160px;">
+            </div>
+            <div class=" form-group">
+                <input name="height" type="text" class="form-control" placeholder="height" style="width: 160px;">
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="form-group">
+<label class="sr-only" for="name">名称</label>
+<input type="text" class="form-control" id="name"
+       placeholder="请输入名称">
+</div>
+<div class="form-group">
+<label class="sr-only" for="inputfile">文件输入</label>
+<input type="file" id="inputfile">
+</div>
+<div class="checkbox">
+<label>
+    <input type="checkbox"> 请打勾
+</label>
+</div>-->
+    <button type="submit" class="btn btn-primary">提交</button>
+</form>
+
+<button class="btn1" onclick="initModel()">创建新的模块</button>
+
+
+
+<div class="content">
+
+    <div id="div1">
+
+    </div>
+    <div id="div2">
+
+    </div>
+    <div id="div3">
+
+    </div>
+    <div id="div4">
+
+    </div>
+</div>
 
-			</div>
-		</div>
+</body>
 
-	</body>
+<script src="asserts/js/three.js"></script>
 
-	<script src="asserts/js/three.js"></script>
+<script src="asserts/js/OrbitControls.js"></script>
+<script src="asserts/js/DragControls.js"></script>
+<script src="asserts/js/TransformControls.js"></script>
+<script type="text/javascript">
+    var renderer1, renderer2, renderer3, renderer4;
 
-	<script src="asserts/js/OrbitControls.js"></script>
-	<script src="asserts/js/DragControls.js"></script>
-	<script src="asserts/js/TransformControls.js"></script>
+    function initRender() {
+        renderer1 = new THREE.WebGLRenderer();
+        renderer2 = new THREE.WebGLRenderer();
+        renderer3 = new THREE.WebGLRenderer();
+        renderer4 = new THREE.WebGLRenderer();
+        renderer1.setSize(window.innerWidth / 2.6, window.innerHeight / 2.6);
+        renderer2.setSize(window.innerWidth / 2.6, window.innerHeight / 2.6);
+        renderer3.setSize(window.innerWidth / 2.6, window.innerHeight / 2.6);
+        renderer4.setSize(window.innerWidth / 2.6, window.innerHeight / 2.6);
+
+        var div1 = document.getElementById("div1");
+        var div2 = document.getElementById("div2");
+        var div3 = document.getElementById("div3");
+        var div4 = document.getElementById("div4");
+
+        div1.appendChild(renderer1.domElement);
+        div2.appendChild(renderer2.domElement);
+        div3.appendChild(renderer3.domElement);
+        div4.appendChild(renderer4.domElement);
+
+    }
+    var scene;
+    var objects = [];
+
+    function initScene() {
+        scene = new THREE.Scene();
+        var size = 100;
+        var divisions = 1000;
+        var gridHelper = new THREE.GridHelper(size, divisions);
+        scene.add(gridHelper);
+    }
+
+    var camera1, camera2, camera3, camera4;
+
+    function initCamera() {
+        camera1 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
+        camera1.position.set(10, 0, 0);
+        camera1.lookAt(scene.position);
+
+        camera2 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
+        camera2.position.set(0, 10, 0);
+        camera2.lookAt(scene.position);
+
+        camera3 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
+        camera3.position.set(0, 0, 10);
+        camera3.lookAt(scene.position);
+
+        camera3 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
+        camera3.position.set(0, 0, 10);
+        camera3.lookAt(scene.position);
+
+        camera4 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200); //实例化相机
+        camera4.position.set(-3, 3, 5);
+        camera4.lookAt(0, 0, 0)
 
+    }
+    var cube;
 
-	<script type="text/javascript">
-		var renderer1, renderer2, renderer3, renderer4;
+    function initModel() {
 
-		function initRender() {
-			renderer1 = new THREE.WebGLRenderer();
-			renderer2 = new THREE.WebGLRenderer();
-			renderer3 = new THREE.WebGLRenderer();
-			renderer4 = new THREE.WebGLRenderer();
-			renderer1.setSize(window.innerWidth / 3, window.innerHeight / 3);
-			renderer2.setSize(window.innerWidth / 3, window.innerHeight / 3);
-			renderer3.setSize(window.innerWidth / 3, window.innerHeight / 3);
-			renderer4.setSize(window.innerWidth / 3, window.innerHeight / 3);
+        var cubeGeometry = new THREE.CubeGeometry(1, 0.5, 0.8);
+        var cubeMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ffff
+        });
+        cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cube.position.x = 0;
+        cube.position.z = 0;
+        // cube.castShadow = true; //开启阴影
 
-			var div1 = document.getElementById("div1");
-			var div2 = document.getElementById("div2");
-			var div3 = document.getElementById("div3");
-			var div4 = document.getElementById("div4");
+        scene.add(cube);
+        objects.push(cube)
 
-			div1.appendChild(renderer1.domElement);
-			div2.appendChild(renderer2.domElement);
-			div3.appendChild(renderer3.domElement);
-			div4.appendChild(renderer4.domElement);
-
-		}
-		var scene;
-		var objects = [];
-
-		function initScene() {
-			scene = new THREE.Scene();
-			var size = 100;
-			var divisions = 1000;
-			var gridHelper = new THREE.GridHelper(size, divisions);
-			scene.add(gridHelper);
-		}
-		
-		var camera1, camera2, camera3, camera4;
-
-		function initCamera() {
-			camera1 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
-			camera1.position.set(10, 0, 0);
-			camera1.lookAt(scene.position);
-
-			camera2 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
-			camera2.position.set(0, 10, 0);
-			camera2.lookAt(scene.position);
-
-			camera3 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
-			camera3.position.set(0, 0, 10);
-			camera3.lookAt(scene.position);
-
-			camera3 = new THREE.OrthographicCamera(-2, 2, 1, -1, 8, 100);
-			camera3.position.set(0, 0, 10);
-			camera3.lookAt(scene.position);
-
-			camera4 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200); //实例化相机
-			camera4.position.set(-3, 3, 5);
-			camera4.lookAt(0, 0, 0)
-
-		}
-		var cube;
-
-		function initModel() {
+    }
+    //var size=cube.size();
 
-			var cubeGeometry = new THREE.CubeGeometry(1, 0.5, 0.8);
-			var cubeMaterial = new THREE.MeshPhongMaterial({
-				color: 0x00ffff
-			});
-			cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-			cube.position.x = 0;
-			cube.position.z = 0;
-			// cube.castShadow = true; //开启阴影
-        
-			scene.add(cube);
-			objects.push(cube)
+    var light;
 
-		}
-		//var size=cube.size();
+    function initLight() {
 
-		var light;
+        scene.add(new THREE.AmbientLight(0x404040));
 
-		function initLight() {
+        light = new THREE.DirectionalLight(0xffffff);
 
-			scene.add(new THREE.AmbientLight(0x404040));
+        light.position.set(1, 1, 1);
 
-			light = new THREE.DirectionalLight(0xffffff);
+        scene.add(light);
 
-			light.position.set(1, 1, 1);
+    }
 
-			scene.add(light);
+    var controls;
+    var dragControls1, dragControls2, dragControls3;
+    var scaleControls;
 
-		}
+    function initControls() {
 
-		var controls;
-		var dragControls1, dragControls2, dragControls3;
-		var scaleControls;
+        dragControls1 = new THREE.DragControls(objects, camera1, renderer1.domElement);
+        dragControls1.addEventListener('dragstart', function(event) {
+            console.log(cube.scale.x);
+        });
 
-		function initControls() {
+        dragControls2 = new THREE.DragControls(objects, camera2, renderer2.domElement);
+        dragControls2.addEventListener('dragstart', function(event) {
+            console.log(cube.scale.x);
+        });
 
-			dragControls1 = new THREE.DragControls(objects, camera1, renderer1.domElement);
-			dragControls1.addEventListener('dragstart', function(event) {
-				console.log(cube.scale.x);
-			});
+        dragControls3 = new THREE.DragControls(objects, camera3, renderer3.domElement);
+        dragControls3.addEventListener('dragstart', function(event) {
+            console.log(cube.scale.x);
+        });
+        dragControls1.addEventListener('dragend', function(event) {});
 
-			dragControls2 = new THREE.DragControls(objects, camera2, renderer2.domElement);
-			dragControls2.addEventListener('dragstart', function(event) {
-				console.log(cube.scale.x);
-			});
+        /*	scaleControls1=new THREE.TransformControls( camera1, renderer1.domElement );
+            scaleControls1.addEventListener( 'change', render );
+            scaleControls1.attach(cube);
+            scene.add(scaleControls1);
+            scaleControls1.setMode( "scale" );
 
-			dragControls3 = new THREE.DragControls(objects, camera3, renderer3.domElement);
-			dragControls3.addEventListener('dragstart', function(event) {
-				console.log(cube.scale.x);
-			});
-			dragControls1.addEventListener('dragend', function(event) {});
+            scaleControls2=new THREE.TransformControls( camera2, renderer2.domElement );
+            scaleControls2.addEventListener( 'change', render );
+            scaleControls2.attach(cube);
+            scene.add(scaleControls2);
+            scaleControls2.setMode( "scale" );
 
-					/*	scaleControls1=new THREE.TransformControls( camera1, renderer1.domElement );
-						scaleControls1.addEventListener( 'change', render );
-						scaleControls1.attach(cube);
-						scene.add(scaleControls1);
-						scaleControls1.setMode( "scale" );
-						
-						scaleControls2=new THREE.TransformControls( camera2, renderer2.domElement );
-						scaleControls2.addEventListener( 'change', render );
-						scaleControls2.attach(cube);
-						scene.add(scaleControls2);
-						scaleControls2.setMode( "scale" );
-						
-						scaleControls3=new THREE.TransformControls( camera3, renderer3.domElement );
-						scaleControls3.addEventListener( 'change', render );
-						scaleControls3.attach(cube);
-						scene.add(scaleControls3);
-						scaleControls3.setMode( "scale" );
-						*/
+            scaleControls3=new THREE.TransformControls( camera3, renderer3.domElement );
+            scaleControls3.addEventListener( 'change', render );
+            scaleControls3.attach(cube);
+            scene.add(scaleControls3);
+            scaleControls3.setMode( "scale" );
+            */
 
-		}
+    }
 
-		function render() {
-			renderer1.render(scene, camera1);
-			renderer2.render(scene, camera2);
-			renderer3.render(scene, camera3);
-			renderer4.render(scene, camera4);
-		}
+    function render() {
+        renderer1.render(scene, camera1);
+        renderer2.render(scene, camera2);
+        renderer3.render(scene, camera3);
+        renderer4.render(scene, camera4);
+    }
 
-		function onWindowResize() {
+    function onWindowResize() {
 
-			camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = window.innerWidth / window.innerHeight;
 
-			camera.updateProjectionMatrix();
+        camera.updateProjectionMatrix();
 
-			render();
+        render();
 
-			//			renderer1.setSize(window.innerWidth, window.innerHeight);
-			//				renderer1.setSize(window.innerWidth, window.innerHeight);
-			//					renderer1.setSize(window.innerWidth, window.innerHeight);
-		}
+        //			renderer1.setSize(window.innerWidth, window.innerHeight);
+        //				renderer1.setSize(window.innerWidth, window.innerHeight);
+        //					renderer1.setSize(window.innerWidth, window.innerHeight);
+    }
 
-		function animate() {
+    function animate() {
 
-			//更新控制器 
+        //更新控制器
 
-			//controls.update();
+        //controls.update();
 
-			render();
+        render();
 
-			//更新性能插件 
+        //更新性能插件
 
-			//stats.update();
+        //stats.update();
 
-			requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
 
-		}
+    }
 
-		function draw() {
+    function draw() {
 
-			initRender();
+        initRender();
 
-			initScene();
+        initScene();
 
-			initCamera();
-			initLight();
-		//	initModel();
-			initControls();
+        initCamera();
+        initLight();
+        //	initModel();
+        initControls();
 
-			//initStats();
+        //initStats();
 
-			animate();
+        animate();
 
-			//window.onresize = onWindowResize;
-		}
-	</script>
+        //window.onresize = onWindowResize;
+    }
+</script>
 
 </html>

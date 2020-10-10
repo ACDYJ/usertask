@@ -6,48 +6,58 @@
     <resultMap id="Taskresult" type="com.jie.usertask.entities.Task">
         <result property="taskId" column="task_id"/>
         <result property="id" column="id"/>
-        <result property="taskType" column="task_type"/>
-        <result property="taskDesc" column="task_desc"/>
-        <result property="startTime" column="start_time"/>
+        <result property="wavelength" column="wavelength"/>
+        <result property="structrues" column="structrues"/>
+
         <result property="accuracy" column="accuracy"/>
         <result property="material" column="material"/>
         <result property="splitter" column="splitter"/>
+
+        <result property="xup" column="xup"/>
+        <result property="xdown" column="xdown"/>
+        <result property="yup" column="yup"/>
+        <result property="ydown" column="ydown"/>
+        <result property="zup" column="zup"/>
+        <result property="zdown" column="zdown"/>
+
         <result property="length" column="length"/>
         <result property="width" column="width"/>
         <result property="height" column="height"/>
     </resultMap>
 
     <select id="getAll" resultMap="Taskresult">
-        SELECT * FROM task
+        SELECT * FROM taskdetail
     </select>
 
     <select id="getByTaskId" resultMap="Taskresult">
-        SELECT * FROM task where task_id=#{taskId}
+        SELECT * FROM taskdetail where task_id=#{taskId}
     </select>
 
     <select id="getById" resultMap="Taskresult">
-        SELECT * FROM task where id=#{id}
+        SELECT * FROM taskdetail  where id=#{id}
     </select>
 
-    <select id="login" resultType="com.jie.usertask.entities.Task">
-      select * from user where StudentId=#{StudentId} and password=#{password}
-   </select>
+
 
 
     <insert id="InsertTask" parameterType="com.jie.usertask.entities.Task"
             keyProperty="taskId" useGeneratedKeys="true">
-        INSERT INTO task
+        INSERT INTO taskdetail
         (
-              task_type,task_desc,start_time,accuracy,material,splitter,length,width,height
+           material,wavelength,structrues,accuracy,splitter,xup,xdown,yup,ydown,zup,zdown,length,width,height
         )
         VALUES (
-
-        #{taskType, jdbcType=VARCHAR},
-        #{taskDesc, jdbcType=VARCHAR},
-        #{startTime, jdbcType=VARCHAR},
-        #{accuracy},
         #{material, jdbcType=VARCHAR},
+        #{wavelength},
+        #{structrues, jdbcType=VARCHAR},
+        #{accuracy},
         #{splitter, jdbcType=VARCHAR},
+        #{xup},
+        #{xdown},
+        #{yup},
+        #{ydown},
+        #{zup},
+        #{zdown},
         #{length},
         #{width},
         #{height}

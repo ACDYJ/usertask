@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jie.usertask.mapper.TaskDescMapper">
+    <resultMap id="Taskresult" type="com.jie.usertask.entities.TaskDesc">
+        <result property="taskId" column="task_id"/>
+        <result property="id" column="id"/>
+        <result property="taskType" column="task_type"/>
+        <result property="taskDesc" column="task_desc"/>
+        <result property="startTime" column="start_time"/>
+        <result property="accuracy" column="accuracy"/>
+        <result property="material" column="material"/>
+        <result property="splitter" column="splitter"/>
+        <result property="length" column="length"/>
+        <result property="width" column="width"/>
+        <result property="height" column="height"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="Taskresult">
+        SELECT * FROM task
+    </select>
+
+    <select id="getByTaskId" resultMap="Taskresult">
+        SELECT * FROM task where task_id=#{taskId}
+    </select>
+
+    <select id="getById" resultMap="Taskresult">
+        SELECT * FROM task where id=#{id}
+    </select>
+
+    <select id="login" resultType="com.jie.usertask.entities.TaskDesc">
+      select * from user where StudentId=#{StudentId} and password=#{password}
+   </select>
+
+
+    <insert id="InsertTask" parameterType="com.jie.usertask.entities.TaskDesc"
+            keyProperty="taskId" useGeneratedKeys="true">
+        INSERT INTO task
+        (
+              task_type,task_desc,start_time,accuracy,material,splitter,length,width,height
+        )
+        VALUES (
+
+        #{taskType, jdbcType=VARCHAR},
+        #{taskDesc, jdbcType=VARCHAR},
+        #{startTime, jdbcType=VARCHAR},
+        #{accuracy},
+        #{material, jdbcType=VARCHAR},
+        #{splitter, jdbcType=VARCHAR},
+        #{length},
+        #{width},
+        #{height}
+        )
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from task where task_id=#{taskId}
+    </delete>
+
+</mapper>
